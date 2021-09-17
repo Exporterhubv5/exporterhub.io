@@ -23,6 +23,9 @@ const ContentDetail = () => {
   const [forkState, setForkState] = useState();
   const [starState, setStarState] = useState();
   const [starNumber, setStarNumber] = useState();
+  const [githubContent, setGithubContent] = useState();
+  const [isEditMode, setEditMode] = useState(false);
+  const [desState, setDesState] = useState();
   const changeTheme = useSelector((store) => store.darkThemeReducer);
   const ACTIVECONTENT_OBJ = {
     0: <Exporter readmeContent={exporterInfo.readme} />,
@@ -38,6 +41,7 @@ const ContentDetail = () => {
   useEffect(() => {
     fetchData();
   }, [forkState]);
+
   const fetchData = () => {
     const HEADER = TOKEN && { Authorization: TOKEN };
     axios({
@@ -55,12 +59,28 @@ const ContentDetail = () => {
         console.log(err);
       });
   };
+
   const handleActiveTab = (id) => {
     setTest(id);
   };
+
   window.onpopstate = function (event) {
     localStorage.setItem("activeTab", 0);
   };
+
+  const handleMode = () => {
+    setEditMode(!isEditMode);
+  };
+
+  const handleInput = (e) => {
+    setDesState(e.target.value);
+  };
+
+  const onSubmitButton = (e) => {
+    const submitButton = { description: desState };
+    console.log(submitButton);
+  };
+
   return (
     <>
       <Header dark={changeTheme}>
@@ -74,6 +94,16 @@ const ContentDetail = () => {
               setForkState={setForkState}
               starNumber={starNumber}
               setStarNumber={setStarNumber}
+              desState={desState}
+              setDesState={setDesState}
+              handleMode={handleMode}
+              handleInput={handleInput}
+              isEditMode={isEditMode}
+              setEditMode={setEditMode}
+              onSubmitButton={onSubmitButton}
+              githubContent={githubContent}
+              file=".csv"
+              type="text"
             />
           )}
         </Container>

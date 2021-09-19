@@ -30,12 +30,18 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
+# Django REST Framework
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    ),
+}
 
 # Application definition
 
 INSTALLED_APPS = [
     #'django.contrib.admin',
-    #'django.contrib.auth',
+    'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -43,6 +49,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'hub',
     'django_apscheduler',
+    #'rest_framework',
+    'drf_yasg', 
 ]
 
 MIDDLEWARE = [

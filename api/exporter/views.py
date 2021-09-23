@@ -375,7 +375,8 @@ class ExporterDetailView(View):
                     'is_new'                : (timezone.now() - exporter.created_at).days <= 7,
                     'repository_url'        : exporter.repository_url,
                     'forked_repository_url' : forked_repository_url,
-                    'description'           : dataframe.loc[condition, 'description'].iloc[0] if not dataframe[condition].empty else '',
+                    'description'           : exporter.description,
+                    'detail_description'    : dataframe.loc[condition, 'description'].iloc[0] if not dataframe[condition].empty else '',
                     'readme'                : exporter.readme.decode('utf-8'),
                     'recent_release'        : exporter.release_set.order_by('date').last().date if exporter.release_set.filter().exists() else '1970-01-01',
                     'release'               : [{
@@ -397,8 +398,8 @@ class ExporterDetailView(View):
             exporter     = Exporter.objects.get(id = exporter_id)
             data         = json.loads(request.body)
             description  = data["description"]
-            message      = data["message"]
-
+            message      = f"{exporter.name} create"
+        
             if not (description and message):
                 return JsonResponse({'message':'FILL_THE_BLANK'}, status = 400)  
 
@@ -406,7 +407,7 @@ class ExporterDetailView(View):
             file      = StringIO(get_csv['content'])
             dataframe = pd.read_csv(file, sep=',')
             condition = dataframe.exporter_id == exporter.id
-
+    
             if not dataframe[condition].empty:
                 return JsonResponse({'message':'EXIST_EXPORTER'}, status = 400)
 
@@ -414,8 +415,20 @@ class ExporterDetailView(View):
             all_content     = get_csv['content'] + '\n' + request_content
             content         = base64.b64encode(all_content.encode('utf-8')).decode('utf-8')
             result          = self.push_to_github(token=github_token, message=message, content=content, sha=get_csv['sha'])        
+            
+            get_csv   = self.get_csv(github_token)
+            file      = StringIO(get_csv['content'])
+            dataframe = pd.read_csv(file, sep=',')
+            condition = dataframe.exporter_id == exporter.id
+            dataframe.loc[condition, 'description'] = description
 
-            return JsonResponse({'message':'CREATED'}, status = 201)
+            response = {
+                "exporter_id"   : int(dataframe.loc[condition,'exporter_id'].iloc[0]),
+                "exporter_name" : dataframe.loc[condition,'exporter_name'].iloc[0],
+                "description"   : dataframe.loc[condition,'description'].iloc[0]
+            }
+            
+            return JsonResponse(response, status = 201)
 
         except KeyError:
             return JsonResponse({'message':'KEY_ERROR'}, status = 400)
@@ -427,7 +440,7 @@ class ExporterDetailView(View):
             exporter     = Exporter.objects.get(id = exporter_id)
             data         = json.loads(request.body)
             description  = data["description"]
-            message      = data["message"]
+            message      = f"{exporter.name} update"
 
             get_csv   = self.get_csv(github_token)
             file      = StringIO(get_csv['content'])

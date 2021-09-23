@@ -3,7 +3,7 @@ import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(Path(__file__).resolve().parent.parent)
-
+ROOT_DIR = os.path.dirname(BASE_DIR)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -20,12 +20,6 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
-# Django REST Framework
-REST_FRAMEWORK = {
-    'DEFAULT_RENDERER_CLASSES': (
-        'rest_framework.renderers.JSONRenderer',
-    ),
-}
 
 # Application definition
 
@@ -42,7 +36,7 @@ INSTALLED_APPS = [
     'exporter',
     'user',
     'headtoken',
-    #'rest_framework',
+    'rest_framework_swagger',
     'drf_yasg',
 ]
 
@@ -51,7 +45,7 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     #'django.middleware.csrf.CsrfViewMiddleware',
-    #'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware'
@@ -130,6 +124,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_DIR = os.path.join(BASE_DIR,'static')
+STATICFILES_DIRS = [
+    STATIC_DIR,
+]
+
+STATIC_ROOT = os.path.join(ROOT_DIR,'.static_root')
+
+SWAGGER_SETTINGS = {
+    "SECURITY_DEFINITIONS": {"basic": {"type": "basic"}},
+    "USE_SESSION_AUTH": False,
+}
 
 APPEND_SLASH = False
 

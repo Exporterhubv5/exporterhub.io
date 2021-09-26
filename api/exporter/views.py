@@ -435,7 +435,7 @@ class ExporterView(View):
             return JsonResponse({'message':'KEY_ERROR'}, status=400)
 
 
-class ExporterDetailView(APIView):
+class ExporterDetailView(View):
     def check_starred(self, user, exporter, headers, repo_info):
         result    = requests.get(f'https://api.github.com/user/starred/{repo_info}', headers=headers)
         
@@ -507,7 +507,7 @@ class ExporterDetailView(APIView):
         except Exporter.DoesNotExist:
             return JsonResponse({'message':'NO_EXPORTER'}, status=400)
 
-class ExporterTabView(APIView):
+class ExporterTabView(View):
     def get_csv(self, app_name, content_type, csv_file_type, headers):
         repo     = f"{settings.ORGANIZATION}/exporterhub.io"
         url      = f"https://api.github.com/repos/{repo}/contents/contents/{app_name}/{app_name}_{content_type}/{app_name}_{content_type}.{csv_file_type}"

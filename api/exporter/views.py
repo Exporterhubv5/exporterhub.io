@@ -14,6 +14,9 @@ from django.db.models       import Q, Max
 from django.db              import transaction
 from django.utils           import timezone
 from django.conf            import settings
+from rest_framework.views   import APIView
+from drf_yasg.utils         import swagger_auto_schema
+from drf_yasg               import openapi
 
 from .models                import Category, Exporter, Release, Official 
 from headtoken.models       import Token
@@ -24,7 +27,7 @@ api_url = 'https://api.github.com/repos/'
 PATTERN = r"!\[(\w*|\s|\w+( \w+)*)\]\(([^,:!]*|\/[^,:!]*\.\w+|\w*.\w*)\)"
 
 
-class CategoryView(View):
+class CategoryView(APIView):
     def get_contents(self, headers):
         repo   = f"{settings.ORGANIZATION}/exporterhub.io"        
         url    = f"https://api.github.com/repos/{repo}/contents/api/exporter_list.csv"
@@ -186,7 +189,7 @@ class CategoryView(View):
         else:
             return JsonResponse({'message': 'GITHUB_REPO_API_ERROR'}, status=404)
 
-class ExporterView(View):
+class ExporterView(APIView):
     def get_repo(self, github_token, repo_url):
         headers     = {'Authorization' : 'token ' + github_token} 
 
@@ -432,7 +435,7 @@ class ExporterView(View):
             return JsonResponse({'message':'KEY_ERROR'}, status=400)
 
 
-class ExporterDetailView(View):
+class ExporterDetailView(APIView):
     def check_starred(self, user, exporter, headers, repo_info):
         result    = requests.get(f'https://api.github.com/user/starred/{repo_info}', headers=headers)
         
@@ -504,7 +507,7 @@ class ExporterDetailView(View):
         except Exporter.DoesNotExist:
             return JsonResponse({'message':'NO_EXPORTER'}, status=400)
 
-class ExporterTabView(View):
+class ExporterTabView(APIView):
     def get_csv(self, app_name, content_type, csv_file_type, headers):
         repo     = f"{settings.ORGANIZATION}/exporterhub.io"
         url      = f"https://api.github.com/repos/{repo}/contents/contents/{app_name}/{app_name}_{content_type}/{app_name}_{content_type}.{csv_file_type}"

@@ -1,14 +1,14 @@
 docker_version="latest"
-front_tag="release-fe0.3.14"
-api_tag="release-api0.3.4"
+front_tag="release-fe0.3.15-p130v2"
+api_tag="release-api0.3.5-p130v2"
 
 hello:
 	#
 	# You can use - build / build-fe / build-be / set / run / start / push / all
 	#
 set:
-	sed -i "s/^front_tag=.*/front_tag=\"${front_tag}\"/" .env
-	sed -i "s/^api_tag=.*/api_tag=\"${api_tag}\"/" .env
+	gsed -i "s/^front_tag=.*/front_tag=\"${front_tag}\"/" .env
+	gsed -i "s/^api_tag=.*/api_tag=\"${api_tag}\"/" .env
 build-fe:
 	sudo docker build -t nexclipper/exporterhub:${front_tag} ./ --no-cache
 	sudo docker tag nexclipper/exporterhub:${front_tag} nexclipper/exporterhub:${docker_version}

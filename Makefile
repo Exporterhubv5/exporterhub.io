@@ -7,8 +7,8 @@ hello:
 	# You can use - build / build-fe / build-be / set / run / start / push / all
 	#
 set:
-	gsed -i "s/^front_tag=.*/front_tag=\"${front_tag}\"/" .env
-	gsed -i "s/^api_tag=.*/api_tag=\"${api_tag}\"/" .env
+	sed -i "s/^front_tag=.*/front_tag=\"${front_tag}\"/" .env
+	sed -i "s/^api_tag=.*/api_tag=\"${api_tag}\"/" .env
 build-fe:
 	sudo docker build -t nexclipper/exporterhub:${front_tag} ./ --no-cache
 	sudo docker tag nexclipper/exporterhub:${front_tag} nexclipper/exporterhub:${docker_version}

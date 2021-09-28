@@ -1,1 +1,2 @@
 "01","aaaa", "./contents/Go-Client/Go-Client_helm/aaaa_helm.yaml", 
+02,{content},./contents/{app_name}/{app_name}_{content_type}/{file_name}_{content_type}.{type[content_type]}

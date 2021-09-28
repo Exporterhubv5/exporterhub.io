@@ -1,2 +1,3 @@
 "01","aaaaa","./contents/kube-state-metrics/kube-state-metrics_helm/aaaaa_helm.yaml", 
 "02","bbbbb", "./contents/kube-state-metrics/kube-state-metrics_helm/bbb_helm.yaml",
+"03","cccc", "./contents/kube-state-metrics/kube-state-metrics_helm/ccc_helm.yaml",

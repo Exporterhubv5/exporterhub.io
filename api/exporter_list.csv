@@ -1,6 +1,6 @@
 title,project_name,github_url,offcial,category,
 eBPF,eBPF Exporter,https://github.com/cloudflare/ebpf_exporter,0,Miscellaneous,
-Ceph,Ceph Exporter,https://github.com/digitalocean/ceph_exporter,0,Storage,
+Ceph,Ceph Exporter,https://github.com/digitalocean/ceph_exporter,0,hello,
 Grok,Grok Exporter,https://github.com/fstab/grok_exporter,0,Logging,
 RabbitMQ,RabbitMQ Exporter,https://github.com/kbudde/rabbitmq_exporter,0,Messaging,
 Kong API Gateway,Kong Prometheus Plugin,https://github.com/Kong/kong-plugin-prometheus,0,Software,

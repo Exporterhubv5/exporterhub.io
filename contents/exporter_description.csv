@@ -1,3 +1,3 @@
 "exporter_id","exporter_name","description"
 "38","dnsbl-exporter","디스크립션 생성합니다"
-"17","CloudWatch Exporter","An exporter for Amazon CloudWatch, for Prometheus. For ECS-specifc workloads, there's also an ECS exporter."
+"17","CloudWatch Exporter","CloudWatch Exporter 디스크립션입니다."

@@ -39,3 +39,5 @@ dnsbl-exporter,dnsbl-exporter,https://github.com/Luzilla/dnsbl_exporter,0,Monito
 Query exporter,query-exporter,https://github.com/go-gywn/query-exporter,0,Database,
 Elasticsearch Exporter,Elasticsearch Exporter,https://github.com/prometheus-community/elasticsearch_exporter,0,Database,
 MongoDB,MongoDB Exporter,https://github.com/percona/mongodb_exporter,0,Database,
+삼다수,Samdaso-o,https://github.com/Samdaso-o/Samdaso-o,0,위코드,
+매일리호텔,23-2nd-MAEILYHOTEL-backend,https://github.com/byoungjupark/23-2nd-MAEILYHOTEL-backend,0,위코드,
